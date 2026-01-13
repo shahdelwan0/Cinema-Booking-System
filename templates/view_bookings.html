@@ -1,0 +1,112 @@
+<!--  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Bookings</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-size: 1rem;
+        }
+
+        td {
+            font-size: 1rem;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Actions Links */
+        a {
+            color: #3498db;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #ecf0f1;
+        }
+
+        /* Confirmation Dialog */
+        a:active {
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Bookings</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>Movie Name</th>
+                <th>Booking Date</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.BookingID }}</td>
+                    <td>{{ booking.schedule.movie.Title }}</td>
+                    <td>{{ booking.BookingTime }}</td>
+                    <td>{{ booking.total_price }}</td>
+                    <td>{{ booking.BookingStatus }}</td>
+                    <td>
+                        <a href="{{ url_for('booking_confirmation', booking_id=booking.BookingID) }}">Edit</a> |
+                        <a href="{{ url_for('delete_booking', booking_id=booking.BookingID) }}" onclick="return confirm('Are you sure you want to delete this booking?')">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

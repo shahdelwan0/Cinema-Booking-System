@@ -1,0 +1,140 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <h1>Welcome, {{ current_user.UserName }}!</h1>
+    <h2>Available Movies</h2>
+    <ul>
+      {% for movie in movies %}
+      <h3>{{ movie.Title }}</h3>
+      <p>{{ movie.Description }}</p>
+  
+      {% for schedule in movie.schedules %}
+          <a href="{{ url_for('book_now', schedule_id=schedule.ScheduleID) }}">Book Now</a>
+      {% endfor %}
+  {% endfor %}
+    </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <style>
+      /* Global Styles */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      h1,
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-top: 30px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        margin-top: 50px;
+      }
+
+      /* Movie List */
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 20px;
+      }
+
+      li {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        padding: 20px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      h3 {
+        color: #3498db;
+        font-size: 1.25rem;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #555;
+      }
+
+      a {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      a:hover {
+        background-color: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <nav style="background-color: #3498db; padding: 10px; text-align: center">
+      <a href="{{ url_for('dashboard') }}" style="color: white; margin: 0 15px"
+        >Dashboard</a
+      >
+      <a
+        href="{{ url_for('view_bookings') }}"
+        style="color: white; margin: 0 15px"
+        >My Bookings</a
+      >
+      <a href="{{ url_for('logout') }}" style="color: white; margin: 0 15px"
+        >Logout</a
+      >
+    </nav>
+    <h1>Welcome, {{ current_user.UserName }}!</h1>
+    <h2>Available Movies</h2>
+    <ul>
+      {% for movie in movies %}
+      <li>
+        <img
+          src="{{ movie.PosterURL }}"
+          alt="{{ movie.Title }} Poster"
+          style="width: 150px; height: auto; float: left; margin-right: 20px"
+        />
+        <h3>{{ movie.Title }}</h3>
+        <p>{{ movie.Description }}</p>
+        <p>
+          Rating: {{ movie.Rating }}/10 | Duration: {{ movie.DurationMinutes }}
+          min | Price: ${{ movie.TicketPrice }}
+        </p>
+
+        <h4>Showtimes:</h4>
+        {% for schedule in movie.schedules %}
+        <a href="{{ url_for('book_now', schedule_id=schedule.ScheduleID) }}"
+          >{{ schedule.ShowTime.strftime('%Y-%m-%d %H:%M') }}</a
+        >
+        | {% endfor %}
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
